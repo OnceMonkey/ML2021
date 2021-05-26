@@ -8,6 +8,11 @@ def get_BalancedWeights(ds:DatasetFolder):
     datas=pd.DataFrame(ds.samples,columns=['paths','label'])
     distribution=pd.value_counts(datas['label'])
     weights=[1/float(distribution[i]) for i in datas['label']]
+    # ----------------------------展示数据分布--------------------------- #
+    print(datas['label'],distribution,weights)
+    import matplotlib.pyplot as plt
+    datas['label'].hist()
+    plt.show()
     return weights
 
 class Food11():
@@ -40,13 +45,15 @@ class Food11():
 
         return train_set, valid_set,unlabeled_set,test_set
 
+        
+
 if __name__ == '__main__':
     img_size=128
     ds_root=r'E:\temp\food-11'
     food11=Food11(ds_root,(img_size,img_size))
     train_set,valid_set,unlabeled_set,test_set=food11.getDataset()
-    # for image,label in train_set:
-        # print(image.shape,label)
+    # for image,label in unlabeled_set:
+    #     print(image.shape,label)
     
     from torch.utils.data.sampler import WeightedRandomSampler
     from torch.utils.data import DataLoader
@@ -54,6 +61,8 @@ if __name__ == '__main__':
     sampler = WeightedRandomSampler(train_w,num_samples=len(train_w),replacement=True)
     print(len(sampler),len(train_w))
     img_dl = DataLoader(train_set, batch_size=128,sampler=sampler,num_workers=4, pin_memory=True)
-    # img_dl = DataLoader(train_set, batch_size=128,shuffle=True,num_workers=0, pin_memory=True)
-    for i, (images,labels) in enumerate(img_dl, start=1): 
-        print(images.shape,labels.shape)
+    img_dl = DataLoader(train_set, batch_size=128,shuffle=True,num_workers=4, pin_memory=True)
+    # for i, (images,labels) in enumerate(img_dl, start=1): 
+        # print(images.shape,labels.shape)
+    
+    
