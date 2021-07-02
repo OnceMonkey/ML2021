@@ -1,5 +1,6 @@
 **/*.pth
 **/.idea
 **/*.pyc
-*/mlruns
-*/results
+**/mlruns
+**/results
+**/cps
