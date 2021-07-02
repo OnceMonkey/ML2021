@@ -2,6 +2,8 @@ from models.Classifier import Classifier
 from models.CNN import CNN
 from models.Public import Vgg16
 
+import torchvision
+
 
 def get_model(name,num_class=11,pretrained=False):
     if name=='vgg16':
@@ -10,6 +12,8 @@ def get_model(name,num_class=11,pretrained=False):
         return Classifier()
     elif name=='cnn':
         return CNN(num_class)
+    elif name == 'resnet18':
+        return torchvision.models.resnet18(num_classes=num_class,pretrained=pretrained)
     else:
         raise NotImplementedError('not yet implementation!')
 

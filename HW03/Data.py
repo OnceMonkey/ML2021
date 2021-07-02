@@ -30,7 +30,6 @@ class Food11():
             transforms.ToTensor(),
             # transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
         ])
-    
 
     def getDataset(self):
         train_path=os.path.join(self.ds_root,'training/labeled')
@@ -52,17 +51,16 @@ if __name__ == '__main__':
     ds_root=r'E:\temp\food-11'
     food11=Food11(ds_root,(img_size,img_size))
     train_set,valid_set,unlabeled_set,test_set=food11.getDataset()
-    # for image,label in unlabeled_set:
-    #     print(image.shape,label)
+    for image,label in train_set:
+        print(type(image),type(label),image.shape,label)
     
     from torch.utils.data.sampler import WeightedRandomSampler
     from torch.utils.data import DataLoader
-    train_w = get_BalancedWeights(train_set)
-    sampler = WeightedRandomSampler(train_w,num_samples=len(train_w),replacement=True)
-    print(len(sampler),len(train_w))
-    img_dl = DataLoader(train_set, batch_size=128,sampler=sampler,num_workers=4, pin_memory=True)
-    img_dl = DataLoader(train_set, batch_size=128,shuffle=True,num_workers=4, pin_memory=True)
-    # for i, (images,labels) in enumerate(img_dl, start=1): 
-        # print(images.shape,labels.shape)
-    
+    # train_w = get_BalancedWeights(train_set)4
+    # sampler = WeightedRandomSampler(train_w,num_samples=len(train_w),replacement=True)
+    # print(len(sampler),len(train_w))
+    # img_dl = DataLoader(train_set, batch_size=128,sampler=sampler,num_workers=4, pin_memory=True)
+    # img_dl = DataLoader(train_set, batch_size=128,shuffle=True,num_workers=4, pin_memory=True)
+
+
     

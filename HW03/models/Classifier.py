@@ -29,8 +29,10 @@ class Classifier(nn.Module):
         self.fc_layers = nn.Sequential(
             nn.Linear(256 * 8 * 8, 256),
             nn.ReLU(),
+            nn.Dropout(0.25),
             nn.Linear(256, 256),
             nn.ReLU(),
+            nn.Dropout(0.25),
             nn.Linear(256, 11)
         )
 
